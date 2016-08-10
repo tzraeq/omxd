@@ -188,6 +188,7 @@ static int parse(char *line)
 	if (cmd != NULL && *cmd != 0) {
 		get_output(cmd);
 		player(cmd, next_hdmi_filter(m_list(cmd, file)));
+		status_log();
 	}
 	if (cmd != NULL && *cmd == 'O')
 		player_add_opt(file);

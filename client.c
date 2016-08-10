@@ -126,6 +126,8 @@ int parse_status(char *st, char *playing, int *t_play, int *t_len, int *t_pos, i
 	if (strncmp(st, "Stopped", 8) == 0) {
 		*t_play = 0;
 		*t_len = 0;
+		*t_pos = 0;
+		*t_llen = 0;
 		playing[0] = 0; /* Empty string */
 	} else {
 		/* Extract track length from omxplayer log file */
