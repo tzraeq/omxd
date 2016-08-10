@@ -9,8 +9,10 @@
 ### END INIT INFO
 
 omxd_pid() {
-  ps -C omxd -o pid=,ppid= | while read PID PPID; do
-    [ "$PPID" = 1 ] && echo $PID && break
+#  ps -C omxd -o pid=,ppid= | while read PID PPID; do
+#    [ "$PPID" = 1 ] && echo $PID && break
+  ps -C omxd -o pid=,ppid=,cmd= | while read PID PPID CMD; do
+    [ "$CMD" = 'omxd' ] && echo $PID && break
   done
 }
 
