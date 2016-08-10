@@ -14,7 +14,7 @@ static char *now_next[2] = { NULL, NULL };
 static char next_file[LINE_LENGTH];
 static char inserted_next_file = 0;
 
-enum list_pos { L_START, L_ACT, L_END, L_ALL };
+//enum list_pos { L_START, L_ACT, L_END, L_ALL };
 enum e_dirs { D_1ST, D_PREV, D_ACT, D_NEXT, D_LAST, D_NUMOF };
 static int dirs[D_NUMOF] = { 0, };
 
@@ -25,7 +25,7 @@ static int insert(enum list_pos base, int offs, char *file);
 static int delete(enum list_pos base, int offs);
 static int jump(enum list_pos base, int offs);
 
-static int get_pos(enum list_pos base, int offs, int wrap);
+int get_pos(enum list_pos base, int offs, int wrap);
 
 static void update_dirs(void);
 int new_dir(char *last, char *this);
@@ -231,7 +231,7 @@ static int jump(enum list_pos base, int offs)
 	return 3;
 }
 
-static int get_pos(enum list_pos base, int offs, int wrap)
+int get_pos(enum list_pos base, int offs, int wrap)
 {
 	int i_base =
 		  list.i < 0      ? -1

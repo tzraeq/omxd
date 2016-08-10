@@ -60,6 +60,7 @@ extern int I_root;
 #define PID_FILE  (I_root ? "/var/run/omxd.pid" : "omxd.pid")
 
 /* From m_list.c */
+enum list_pos { L_START, L_ACT, L_END, L_ALL };
 char **m_list(char *cmd, char *file);
 enum e_lmode { LOOP, END, SHUFFLE };
 extern enum e_lmode lmode;
@@ -68,7 +69,8 @@ extern enum e_lmode lmode;
 #include <sys/stat.h>
 mode_t get_ftype(char *file);
 int client(int argc, char *argv[]);
-int parse_status(char *st, char *playing, int *t_play, int *t_len, int *pid);
+//int parse_status(char *st, char *playing, int *t_play, int *t_len, int *pid);
+int parse_status(char *st, char *playing, int *t_play, int *t_len, int *t_pos, int *t_llen, int *pid);
 int player_length(char *omxp_log);
 
 #endif

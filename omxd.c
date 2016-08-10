@@ -6,6 +6,8 @@
 #include <string.h>
 #include "omxd.h"
 
+extern int get_pos(enum list_pos base, int offs, int wrap);
+
 struct player *now = NULL;
 struct player *next = NULL;
 
@@ -355,16 +357,21 @@ static void status_log(void)
 	enum pstate state = player_state(now);
 	if (state == P_DEAD)
 		printfd(fd, "%d Stopped\n", time(NULL));
-	else
+	else{
+		int pos = get_pos(L_ACT,0,0);
+		int ln = get_pos(L_END,0,0);
 		printfd(
 			fd,
-			"%d %s %d %s %s\n",
+			"%d %s %d %s %d %d %s\n",
 			time(NULL),
 			state == P_PAUSED ? "Paused"
 			       :            "Playing",
 			player_dt(now),
 			player_logfile(now),
+			pos + 1,
+			ln,
 			player_file(now)
 		);
+	}
 	close(fd);
 }

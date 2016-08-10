@@ -77,19 +77,19 @@ static int client_cmd(char *cmd, char *file)
 		return 15;
 	char st[LINE_LENGTH] = { 0, };
 	char playing[LINE_LENGTH] = { 0, };
-	int t_play, t_len;
+	int t_play, t_len, t_pos, t_llen;
 	int pid = 0;
-	int res = parse_status(st, playing, &t_play, &t_len, &pid);
+	int res = parse_status(st, playing, &t_play, &t_len, &t_pos, &t_llen, &pid);
 	if (res)
 		return res;
 	/* Print */
-	printfd(1, "%s %d/%d %s\n", st, t_play, t_len, playing);
+	printfd(1, "%s %d/%d %d/%d %s\n", st, t_play, t_len, t_pos, t_llen, playing);
 	if (file != NULL && strncmp(file, "all", 4) == 0)
 		print_list(playing);
 	return 0;
 }
 
-int parse_status(char *st, char *playing, int *t_play, int *t_len, int *pid)
+int parse_status(char *st, char *playing, int *t_play, int *t_len, int *t_pos, int *t_llen, int *pid)
 {
 	/* Open status log file */
 	FILE *logfile = fopen("omxstat", "r");
@@ -115,6 +115,10 @@ int parse_status(char *st, char *playing, int *t_play, int *t_len, int *pid)
 	char *omxp_log = strtok(NULL, " \n");
 	if (omxp_log != NULL)
 		sscand(omxp_log + 23, pid); /* Keep PID from logfile name */
+	//pos
+	sscand(strtok(NULL, " \n"), t_pos);
+	//len
+	sscand(strtok(NULL, " \n"), t_llen);
 	tok = strtok(NULL, "\n");
 	if (tok != NULL)
 		strcpy(playing, tok);
