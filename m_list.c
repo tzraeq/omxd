@@ -215,10 +215,13 @@ static int delete(enum list_pos base, int offs)
 	        (size_new - i) * sizeof(char*));
 	list.arr_sz = realloc(list.arr_sz, size_new * sizeof(char*));
 	list.size = size_new;
-	if (list.i > i)
+	int before = 0;
+	if (list.i > i){
 		list.i--;
+		before = 1;
+	}
 	save_list();
-	return i == list.i ? 3 : i == list.i+1 ? 2 : 0;
+	return i == list.i && !before ? 3 : i == list.i+1 ? 2 : 0;
 }
 
 static int jump(enum list_pos base, int offs)
